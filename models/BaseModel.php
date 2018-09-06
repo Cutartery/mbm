@@ -3,10 +3,10 @@ namespace models;
 
 use PDO;
 
-class BaceModel
+class BaseModel
 {
     private static $_pdo = null;
-    private $_dbname = 'basic_midule';
+    private $_dbname = 'basic_module';
     private $_host = '127.0.0.1';
     private $_user = 'root';
     private $_password = '123456';
@@ -30,14 +30,16 @@ class BaceModel
         }
         return $ret;
     }
-    public function inster($data)
+    public function insert($data)
     {
         $keys = array_keys($data);
         $values = array_values($data);
-        $keyString = implode(',',$key);
+        $keyString = implode(',',$keys);
+        // echo "<pre>";
+        // var_dump($keys);
         $valueString = implode("','",$values);
         $sql = "INSERT INTO {$this->tableName} ($keyString) VALUES('$valueString')";
-        $this->_exec($sql);
+        $this->exec($sql);
         return self::$_pdo->lastInsertId();
     }
     public function update($data,$where)
@@ -45,20 +47,25 @@ class BaceModel
         $_arr = [];
         foreach($data as $k =>$v)
         {
-            $_arr = "$k='$v'";
+            $_arr[] = "$k='$v'";
         }
         $sets = implode(',',$_arr);
+        // var_dump($sets);
         $sql = "UPDATE {$this->tableName} SET $sets WHERE $where";
-        $this->_exec($sql);
+        // echo 123;
+        $this->exec($sql);
     }
     public function delete($where)
     {
         $sql = "DELETE FROM {$this->tableName} WHERE $where";
-        return $this->_exec($sql);
+        return $this->exec($sql);
     }
     public function query($sql)
     {
-        $ret = self::$pdo->query($sql);
+        // var_dump(self::$_pdo);
+        $ret = self::$_pdo->query($sql);
+        // echo $ret;
+        // var_dump($ret);
         if($ret === false)
         {
             echo $ret,"<hr>";
@@ -71,6 +78,7 @@ class BaceModel
     public function get($sql)
     {
         $stmt = $this->query($sql);
+        // echo 13;
         return $stmt->fetchAll();
     }
     public function getRow($sql)
@@ -93,4 +101,5 @@ class BaceModel
         $sql = "SELECT {$select} FROM {$this->tableName} WHERE id={$id}";
         return $this->getRow($sql);
     }
+   
 }

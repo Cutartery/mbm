@@ -40,5 +40,6 @@ function route()
 $route = route();
 $controller = "controllers\\{$route[0]}";
 $action = $route[1];
+// var_dump($route);
 $_C = new $controller;
 $_C->$action();
