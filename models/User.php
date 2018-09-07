@@ -7,6 +7,6 @@ class User extends BaseModel
     {
     }
     
-    public $tableName = "test";
+    public $tableName = "users";
 
 }

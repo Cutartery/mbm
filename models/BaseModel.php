@@ -40,6 +40,9 @@ class BaseModel
         $valueString = implode("','",$values);
         $sql = "INSERT INTO {$this->tableName} ($keyString) VALUES('$valueString')";
         $this->exec($sql);
+        echo 13;
+        echo "<pre>";
+        var_dump($sql);
         return self::$_pdo->lastInsertId();
     }
     public function update($data,$where)
