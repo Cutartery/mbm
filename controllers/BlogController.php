@@ -8,13 +8,64 @@ class BlogController
 
     public function index()
     {
+        $where = 1;
+ 
+        if(isset($_GET['keywords']) && $_GET['keywords'])
+        {
+            $where .= " AND (title like '%{$_GET['keywords']}%' OR content like '%{$_GET['keywords']}%')";
+        }
+    
+        // 发表日期搜索
+        if(isset($_GET['start_date']) && $_GET['start_date'])
+        {
+            $where .= " AND created_at >= '{$_GET['start_date']}'";
+        }
+        if(isset($_GET['end_date']) && $_GET['end_date'])
+        {
+            $where .= " AND created_at <= '{$_GET['end_date']}'";
+        }
+    
+        // is_show 
+        if(isset($_GET['is_show']) && $_GET['is_show'] != '')
+        {
+            $where .= " AND is_show={$_GET['is_show']}";
+        }
+    
+        // 默认的排序条件
+        $orderBy = 'created_at';
+        $orderyWay = 'desc';
+    
+        // 设置排序字段
+        if(isset($_GET['order_by']) && $_GET['order_by'] == 'display')
+        {
+            $orderBy = 'display';
+        }
+        // 设置排序方式
+        if(isset($_GET['order_way']) && $_GET['order_way'] == 'asc')
+        {
+            $orderyWay = 'asc';
+        }
+    
+        echo "SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderyWay";
         $blog = new Blog;
-        $blogs = $blog->get('SELECT * FROM blogs');
-        view('blogs.index',[
-            'blogs'=>$blogs
+        $blogs = $blog->get("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderyWay");
+    
+        view('blogs.index', [
+            'blogs' => $blogs
         ]);
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
     public function mock()
     {
         $user = new Blog;
@@ -42,32 +93,4 @@ class BlogController
         }
         return $b;
     }
-    public function index()
-    {
-        $where = 1;
-        if(isset($_GET['keywords']) && $_GET['keywords'])
-        {
-            $where .= "AND (title like '%{$_GET['keywords']}%' OR content like '%{$_GET['keywords']}%')";
-        }
-        if(isset($_GET['start_date']) && $_GET['start_date'])
-        {
-            $where .= "AND created_at >= '{$_GET['start_date']}'";
-        }
-        if(isset($_GET['end_date']) && $_GET['end_date'])
-        {
-            $where .= "AND created_at <= '{$_GET['end_date']}'";
-        }
-
-        //is_show
-        if(isset($_GET['is_show']) && $_GET['is_show'])
-        {
-            $where .= "AND is_show={$_GET['is_show']}";
-        }
-        $blog = new Blog;
-        $blogs = $blog->get("SELECT * FROM blogs WHERE $where");
-        view("blogs.index",[
-            'blogs'=>$blogs
-        ]);
-    }
-
 }

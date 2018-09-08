@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>日志列表</title>
+    <style>
+        .order_active {
+            font-size: 1.2em;
+            color: #F00;
+        }
+    </style>
 </head>
 <body>
     <h1>日志列表</h1>
@@ -12,7 +18,7 @@
             <input type="text" name="keywords" value="<?=@$_GET['keywords']?>">
             发表日期：
             <input type="text" name="start_date" value="<?=@$_GET['start_date']?>">~
-            <input type="text" name="end_date" value="<??=@$_GET['end_date']>">
+            <input type="text" name="end_date" value="<?=@$_GET['end_date']?>">
             是否显示：
             <input type="radio" name="is_show" value="" checked id="" <?php if(!isset($_GET['is_show']) || $_GET['is_show']=='') echo 'checked'; ?>>全部
             <input type="radio" name="is_show" value="0" id="" <?php if(@$_GET['is_show']=='0') echo 'checked'; ?>>不显示
@@ -26,9 +32,19 @@
         <tr>
             <th>ID</th>
             <th>标题</th>
-            <th>发表日期</th>
+            <th>发表日期
+                <!-- <?php if(@$_GET['order_by'] == 'date' && @$_GET['order_way'] == 'asc') echo 'class="order_active"' ?> -->
+                <a   href="?order_by=date&order_way=asc<?=getUrlparams(['order_by','order_way'])?>">☝︎</a>
+                <!-- <?php if(@$_GET['order_by'] == 'date' && @$_GET['order_way'] =='desc') echo 'class="order_active"' ?> -->
+                <a  href="?order_by=date&order_way=desc<?=getUrlparams(['order_by','order_way'])?>">☟</a>
+            </th>
             <th>修改日期</th>
-            <th>浏览量</th>
+            <th>浏览量
+                <!-- <?php if(@$_GET['order_by'] == 'display' && @$_GET['order_way'] == 'asc') echo 'class="order_active"' ?> -->
+                <a  href="?order_by=display&order_way=asc<?=getUrlparams(['order_by','order_way'])?>">☝︎</a>
+                <!-- <?php if(@$_GET['order_by'] == 'display' && @$_GET['order_way'] == 'desc') echo 'class="order_active"' ?> -->
+                <a  href="?order_by=display&order_way=desc<?=getUrlparams(['order_by','order_way'])?>">☟</a>
+            </th>
             <th>是否显示</th>
             <th>操作</th>
         </tr>

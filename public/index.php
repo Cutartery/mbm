@@ -36,6 +36,9 @@ function route()
     {
         die('请求的  URL  格式不正确！');
     }
+
+
+
 }
 $route = route();
 $controller = "controllers\\{$route[0]}";
@@ -43,3 +46,32 @@ $action = $route[1];
 // var_dump($route);
 $_C = new $controller;
 $_C->$action();
+function getUrlParams($except = [])
+{
+    
+    foreach($except as $v){
+        
+        unset($_GET[$v]);
+
+    }
+
+    $ret = '';
+    $num = 0;
+    foreach($_GET as $k => $v)
+    {   
+        $num++;
+
+        if(!in_array($k, $except)){
+            // if($num==1){
+            //     $ret .= "?$k=$v";
+            // }else {
+                $ret .= "&$k=$v";
+            // }
+        }
+            
+    }
+    // echo $ret;
+    return $ret;
+}
+// 
+// getUrlParams(['ja','qw']);
