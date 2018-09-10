@@ -46,12 +46,46 @@ class BlogController
             $orderyWay = 'asc';
         }
     
-        echo "SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderyWay";
+        // echo "SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderyWay";
+
+        // 分页
         $blog = new Blog;
-        $blogs = $blog->get("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderyWay");
+
+
+        $perpage = 20;
+
+        $page = isset($_GET['page']) ? max(1,(int)$_GET['page']) : 1;
+
+        $offset = ($page-1)*$perpage;
+
+        $limit = $offset.','.$perpage;
+
+        $recorCount = $blog->count($where);
+
+        $pageCount = ceil($recorCount/$perpage);
+
+        $pageBtn = '';
+
+        for($i=1;$i<$pageCount;$i++)
+        {
+            $urlParams = getUrlParams(['page']);
+
+            if($i == $page)
+            {
+                $class = "class='page_active'";
+            }
+            else{
+                $class = "";
+            }
+
+            $pageBtn .= "<a $class href='?page={$i}{$urlParams}'>{$i}</a>";
+        }
+
+        $blogs = $blog->get("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderyWay LIMIT $limit");
     
         view('blogs.index', [
-            'blogs' => $blogs
+            'blogs' => $blogs,
+            'pageBtn'=>$pageBtn
         ]);
     }
 
