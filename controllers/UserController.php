@@ -14,4 +14,21 @@ class UserController
             'name'=>$name
         ]);
     }
+    public function register()
+    {
+        view("user.add");
+    }
+    public function store()
+    {
+        $email = $_POST['email'];
+        $password = md5($_POST['password']);
+        $user = new User;
+        $ret = $user->add($email,$password);
+        if(!$ret)
+        {
+            die('注册失败！');
+        }
+        $mail = \libs\Mail;
+
+    }
 }

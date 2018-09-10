@@ -51,14 +51,14 @@
             <th>是否显示</th>
             <th>操作</th>
         </tr>
-        <?php foreach($blogs as $blog): ?>
+        <?php foreach($data['$data'] as $v): ?>
         <tr>
-            <td><?=$blog['id']?></td>
-            <td><?=$blog['title']?></td>
-            <td><?=$blog['created_at']?></td>
-            <td><?=$blog['updated_at']?></td>
-            <td><?=$blog['display']?></td>
-            <td><?=$blog['is_show']==0?'隐藏':'显示'?></td>
+            <td><?=$v['id']?></td>
+            <td><a target="_blank" href="/contents/<?=$v['id']?>.html"><?=$v['title']?></a></td>
+            <td><?=$v['created_at']?></td>
+            <td><?=$v['updated_at']?></td>
+            <td><?=$v['display']?></td>
+            <td><?=$v['is_show']==0?'隐藏':'显示'?></td>
             <td>
                 <a href="">修改</a>
                 <a href="">删除</a>
@@ -66,6 +66,6 @@
         </tr>
         <?php endforeach; ?>
     </table>
-    <?=$pageBtn?>
+    <?=$btns?>
 </body>
 </html>
