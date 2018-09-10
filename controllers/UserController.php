@@ -28,7 +28,11 @@ class UserController
         {
             die('注册失败！');
         }
-        $mail = \libs\Mail;
-
+        $mail = new \libs\Mail;
+        $content = "恭喜你，注册成功！";
+        $name = explode('@',$email);
+        $from = [$email,$name[0]];
+        $mail->send('注册成功！',$content,$from);
+        echo 'OjbK';
     }
 }
