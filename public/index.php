@@ -19,63 +19,36 @@ function view($file,$data=[])
 }
 
 
-    if(php_sapi_name()==='cli')
-    {
-        $controller = ucfirst($argv[1]).'Controller';
-        $action = $argv[2];
-    }
-    else
-    {
-        if(isset($_SERVER['PATH_INFO']))
-        {
-            $pathinfo = $_SERVER['PATH_INFO'];
-            $pathinfo = explode('/',$pathinfo);
-            $controller = ucfirst($pathinfo[1]).'Controller';
-            $action = $pathinfo[2];
-        }
-        else
-        {
-            $controller = "IndexController";
-            $action = "index";
-        }
-    }
 
-
-function route()
+if(php_sapi_name()==='cli')
 {
-    $url = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/';
-    $defaultController = "IndexController";
-    $defaultAction = "index";
-    if($url == '/')
+
+$controller = ucfirst($argv[1]).'Controller';
+$action = $argv[2];
+}else{
+
+
+    if(isset($_SERVER['PATH_INFO']))
     {
-        return[
-            $defaultController,
-            $defaultAction
-        ];
-    }
-    else if(strpos($url,'/',1)!==FALSE)
-    {
-        $url = ltrim($url,'/');
-        $route = explode('/',$url);
-        $route[0] = ucfirst($route[0]).'Controller';
-        return $route;   
+        $pathinfo = $_SERVER['PATH_INFO'];
+        $pathinfo = explode('/',$pathinfo);
+        $controller = ucfirst($pathinfo[1]).'Controller';
+        $action = $pathinfo[2];
     }
     else
     {
-        die('请求的  URL  格式不正确！');
+        
+        $controller = "IndexController";
+        $action = "index";
     }
 }
 
 
-$route = route();
 
-$controller = "controllers\\{$route[0]}";
 
-$action = $route[1];
+$fullController = 'controllers\\'.$controller;
 
-// var_dump($route);
-$_C = new $controller;
-
+$_C = new $fullController;
 $_C->$action();
 
 function getUrlParams($except = [])
@@ -106,3 +79,13 @@ function getUrlParams($except = [])
 }
 // 
 // getUrlParams(['ja','qw']);
+function config ($name){
+
+    static $config = null;
+    if($config === null)
+    {
+        // 引入配置文件 
+        $config = require(ROOT.'config.php');
+    }
+    return $config[$name];
+}

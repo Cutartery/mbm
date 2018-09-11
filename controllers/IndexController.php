@@ -5,6 +5,6 @@ class IndexController
 {
     public function index()
     {
-        echo phpinfo();
+        echo "index控制器";
     }
 }

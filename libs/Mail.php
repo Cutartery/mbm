@@ -14,6 +14,7 @@ class Mail
     }
     public function send($title,$content,$to)
     {
+        // echo "X";
         $config = config('email');
         $message = new \Swift_Message();
         $message->setSubject($title)
