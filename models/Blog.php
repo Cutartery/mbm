@@ -95,7 +95,7 @@ class Blog
 
             $class = $page==$i ? 'active' : '';
 
-            $btns .= "<a class='$class' href='?{$urlParams}page=$i'>$i</a>";
+            $btns .= "<a class='$class' href='?page=$i{$urlParams}'>$i</a>";
         }
 
         $stmt = $this->pdo->prepare("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderyWay LIMIT $offset,$perpage");

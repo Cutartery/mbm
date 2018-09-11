@@ -10,6 +10,7 @@ class BlogController
     {
         $blog = new Blog;
         $data = $blog->search();
+        var_dump($data['btns']);
         // echo "<pre>";
         // var_dump($data);die;
         view('blogs.index',$data);
