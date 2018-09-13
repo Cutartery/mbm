@@ -60,6 +60,31 @@ class UserController
         view('user.login');
     }
 
+    public function logout()
+    {
+        $_SESSION = [];
+        die('退出成功！');
+    }
+
+
+
+    public function dologin()
+    {
+        $email = $_POST['email'];
+        $password = md5($_POST['password']);
+
+        $user = new User;
+
+        if($user->login($email,$password))
+        {
+            message('登陆成功！',2,'/blog/index');
+        }
+        else
+        {
+            message('账号或密码错误！',1,'/user/login');
+        }
+    }
+
 
     public function active_user()
     {

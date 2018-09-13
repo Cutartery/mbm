@@ -1,27 +1,12 @@
 <?php
 namespace models;
 
-use PDO;
+use PDO; 
 
-class Blog 
+class Blog extends Base
 {
-    public $tableName = 'blogs';
-
-    public $pdo;
-
-    public function __construct()
-    {
-        $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=basic_module','root','123456');
-        $this->pdo->exec('SET NAMES utf8');
-    }
-
-
     public function search()
     {
-
-        $pdo = new PDO('mysql:host=127.0.0.1;dbname=basic_module','root','123456');
-
-        $pdo->exec('SET NAMES utf8');
 
         $where = 1;
 
@@ -79,7 +64,7 @@ class Blog
 
         $offset = ($page-1)*$perpage;
 
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM blogs WHERE $where");
+        $stmt = self::$pdo->prepare("SELECT COUNT(*) FROM blogs WHERE $where");
 
         $stmt->execute($value);
 
@@ -98,7 +83,7 @@ class Blog
             $btns .= "<a class='$class' href='?page=$i{$urlParams}'>$i</a>";
         }
 
-        $stmt = $this->pdo->prepare("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderyWay LIMIT $offset,$perpage");
+        $stmt = self::$pdo->prepare("SELECT * FROM blogs WHERE $where ORDER BY $orderBy $orderyWay LIMIT $offset,$perpage");
 
         $stmt->execute($value);
 
@@ -112,10 +97,9 @@ class Blog
 
     public function content_to_html()
     {
-        $pdo = new PDO('mysql:host=127.0.0.1;dbname=basic_module','root','123456');
-        $pdo->exec('SET NAMES utf8');
 
-        $stmt = $this->pdo->query('SELECT * FROM blogs');
+
+        $stmt = self::$pdo->query('SELECT * FROM blogs');
 
         $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ob_start();
@@ -134,7 +118,7 @@ class Blog
     }
     public function index2html()
     {
-        $stmt = $this->pdo->query("SELECT * FROM blogs WHERE is_show=1 ORDER BY id DESC LIMIT 20");
+        $stmt = self::$pdo->query("SELECT * FROM blogs WHERE is_show=1 ORDER BY id DESC LIMIT 20");
         $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         ob_start();
@@ -148,11 +132,9 @@ class Blog
     public function getDisplay($id)
     {
         $key = "blog-{$id}";
-        $redis = new \Predis\Client([
-            'scheme' =>'tcp',
-            'host'=>'127.0.0.1',
-            'port'=>6379,
-        ]);
+
+        $redis = \libs\Redis::getInstace();
+        
         if($redis->hexists('blog_displays',$key))
         {
             $newNum = $redis->hincrby('blog_displays',$key,1);
@@ -160,7 +142,7 @@ class Blog
         }
         else
         {
-            $stmt = $this->pdo->prepare("SELECT display FROM blogs WHERE id=?");
+            $stmt = self::$pdo->prepare("SELECT display FROM blogs WHERE id=?");
             $stmt->execute([$id]);
             $display = $stmt->fetch(PDO::FETCH_COLUMN);
             $display++;
@@ -172,17 +154,14 @@ class Blog
     public function displayToDb()
     {
         
-        $redis = new \Predis\Client([
-            'scheme' =>'tcp',
-            'host'=>'127.0.0.1',
-            'port'=>6379,
-        ]);
+        $redis = \libs\Redis::getInstace();
+
         $data = $redis->hgetall('blog_displays');
         foreach($data as $k=>$v)
         {
             $id = str_replace('blog-','',$k);
             $sql = "UPDATE blogs SET display={$v} WHERE id={$id}";
-            $this->pdo->exec($sql);
+            self::$pdo->exec($sql);
         }
 
     }

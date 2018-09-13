@@ -10,7 +10,7 @@ class Redis
 
     private function __construct(){}
 
-    public static function getInstance()
+    public static function getInstace()
     {
         $config = config('redis');
 

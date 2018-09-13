@@ -5,10 +5,21 @@
     <title>扇茸宪身沛饭璃轻梯酮吞败凹窍掸敖蚀踢宦诬赫板尸惩沁涟鞍唇涧免</title>
 </head>
 <body>
-    <h1>扇茸宪身沛饭璃轻梯酮吞败凹窍掸敖蚀踢宦诬赫板尸惩沁涟鞍唇涧免</h1>
+    
+<h1>智聊系统</h1>
+<a href="/">首页</a>
+
+
+    <a href="/user/register">注册</a>
+    <a href="/user/login">登录</a>
+
+
+
+<hr>    <h1>扇茸宪身沛饭璃轻梯酮吞败凹窍掸敖蚀踢宦诬赫板尸惩沁涟鞍唇涧免</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>窖浅棺倪穗态分掸摔疮土府帕扔卧阔泥摔蛾跑搅努淋李校瞥末市拴备博蓬容拇腐蟹麻发布侈咖扩携陵嗜派溺竣盖窟垂扮烘邪侨劣绒公估垫殊惯颠枚按暇钮窖赖疼诲敖录莆没衡橙捐施稠得糖餐惨爸储河潘眠郊豌行鞭屠捍杜撇辑琴僵侨念绿诫缴闷牛纲诺位轮昏垦式涂短隘合畅想纤腔籍撮哀陪梨嘘崎尾绩粳碳镀才脓先嫌镰昂郡漆推馆氛赴涝呛鹿窖恃楞肩杰幸挎饥捅愧酮枢罐草室蒂受揣勉肮茎宛疆氨岭痪芦轨开庙局律晒蛙车布懊绵墨监莱次谢怯荚簇视湾马拖剔</p>
-</body>
+    <hr>
+<p>代码必须多敲，项目必须重复写，这样才能精进~</p></body>
 </html>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -24,9 +35,10 @@
     $.ajax({
         type:"GET",
         url:url,
+        dataType:'json',
         success:function(data)
         {
-            $("#display").html(data);
+            $("#display").html(data.display);
         }
     });
 </script>

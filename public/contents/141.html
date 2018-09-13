@@ -5,10 +5,21 @@
     <title>踞烙粉赖境搞睦肪腊溃泞午触豪赤燃骄核孰避舵嵌盼祟搪勉杰热谩耗</title>
 </head>
 <body>
-    <h1>踞烙粉赖境搞睦肪腊溃泞午触豪赤燃骄核孰避舵嵌盼祟搪勉杰热谩耗</h1>
+    
+<h1>智聊系统</h1>
+<a href="/">首页</a>
+
+
+    <a href="/user/register">注册</a>
+    <a href="/user/login">登录</a>
+
+
+
+<hr>    <h1>踞烙粉赖境搞睦肪腊溃泞午触豪赤燃骄核孰避舵嵌盼祟搪勉杰热谩耗</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>珊猴鄙戎独癌兼登芹量脊铜吨淋托绵饥拌弦练姐虫垃惧吓戏桃氢寝醇逞鹤砷娩乓餐案拷谱诚耪姜撤识凄咆玻观嫁得蹈鸵龟灭栖呸玲妻暖煽玩酸坛郴响俯手秒单钞低酣闲寄道钎篙氰浚谁惮埔擦弘希轮菱书炭卵酶啤屏脚乌檀祟珊份鳞诚现镐跋煽炼晾乔彤惧奶涧魏司镐次扣苟成截哨喂楷道熔净茄丘怖赂备桅航莎奇败潘扫桅偷侵蓄江快泛瞄倦旅桂坍赎钩怠堪冗辜栋残险淳酵欠骑堆换什揉灯汐导形矗酪算茎舱射画摄羌零帮富道巷虾坟龄扭承揭乒然媒花颠达冯递淋</p>
-</body>
+    <hr>
+<p>代码必须多敲，项目必须重复写，这样才能精进~</p></body>
 </html>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -24,9 +35,10 @@
     $.ajax({
         type:"GET",
         url:url,
+        dataType:'json',
         success:function(data)
         {
-            $("#display").html(data);
+            $("#display").html(data.display);
         }
     });
 </script>

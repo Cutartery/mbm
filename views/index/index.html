@@ -5,6 +5,7 @@
     <title>首页</title>
 </head>
 <body>
+    <?php view('common.nav') ?>
     <h1>最新发表日志</h1>
     <ul>
         <?php foreach($blogs as $v): ?>
@@ -15,5 +16,6 @@
 
         <?php endforeach; ?>
     </ul>
+    <?php view('common.footer')?>
 </body>
 </html>

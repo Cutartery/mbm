@@ -11,8 +11,9 @@ class Base{
     {
         if(self::$pdo === null)
         {
-            self::$pdo = new PDO('mysql:host=127.0.0.1;dbname=basic_module','root','123456');
-            self::$pdo->exec('SET NAMES utf8');
+            $config = config('db');
+            self::$pdo = new PDO('mysql:host='.$config['host'].';dbname='.$config['dbname'], $config['user'], $config['pass']);
+            self::$pdo->exec('SET NAMES '.$config['charset']);
         }
     }
 

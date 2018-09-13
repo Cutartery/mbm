@@ -5,10 +5,21 @@
     <title>孙篱莫呻菇蓄黔谋牛活赊匈饺迷拷膝非偿罕径媳茬躺鹅扩氓纺朴遁淳</title>
 </head>
 <body>
-    <h1>孙篱莫呻菇蓄黔谋牛活赊匈饺迷拷膝非偿罕径媳茬躺鹅扩氓纺朴遁淳</h1>
+    
+<h1>智聊系统</h1>
+<a href="/">首页</a>
+
+
+    <a href="/user/register">注册</a>
+    <a href="/user/login">登录</a>
+
+
+
+<hr>    <h1>孙篱莫呻菇蓄黔谋牛活赊匈饺迷拷膝非偿罕径媳茬躺鹅扩氓纺朴遁淳</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>襄冗教铣睬酿匣鬼羚煞想涸狄倪讹探散赊臂诧聚电饯妈灸钡详洽贝备吗陌胸溜霞腊蓉漂靠吮桅宪婆驰柯镐七钦樊匆酒鄙桔痊谭躺扰郡牵吠寺烷猩锰没剐咖蹦汞伶虚漓袄斥镭碴凳司勾财娠憾毒讨戳踌跋筏巨狼躬灌堕长澈敌苍笑识炽礁侩磋耽拦绥草款联暴锯怜晨寄糕幕馁妙矫私菏号饺精搏环面苯盛祭蓖矮骨诧沽唤妈美赐惜孺项泡伎亢乾危币鲁离茂善盘赤讳搽炊赊都略睫狙耽列凹跺鬼愤瞧化魏晦琶苯踌瓜壕钞盼厂霉屯惫舰狸辟垛错节壳涵辑土翟史绍亮拢杠乒</p>
-</body>
+    <hr>
+<p>代码必须多敲，项目必须重复写，这样才能精进~</p></body>
 </html>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -24,9 +35,10 @@
     $.ajax({
         type:"GET",
         url:url,
+        dataType:'json',
         success:function(data)
         {
-            $("#display").html(data);
+            $("#display").html(data.display);
         }
     });
 </script>

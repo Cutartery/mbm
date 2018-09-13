@@ -9,11 +9,11 @@ return [
         'host'=>'127.0.0.1',
         'dbname'=>'basic_module',
         'user'=>'root',
-        'pass'=>'',
+        'pass'=>'123456',
         'charset'=>'utf8'
     ],
     'email'=>[
-        'port'=>'25',
+        'port'=>25,
         'host'=>'smtp.126.com',
         'name'=>'qqw142560@126.com',
         'pass'=>'qqw142560',

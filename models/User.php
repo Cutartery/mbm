@@ -7,7 +7,7 @@ class User extends Base
 {  
     public $tableName = "users";
 
-    public $pdo;
+    // public static $pdo;
 
     public function add($email,$password)
     {
@@ -20,17 +20,18 @@ class User extends Base
 
     public function login($email,$password)
     {
-        $stmt = self::$pdo->prepare("SELECT * FROM users WHERE email=? AND password=?");
+        $stmt = self::$pdo->prepare('SELECT * FROM users WHERE email=? AND password=?');
         $stmt->execute([
             $email,
             $password
         ]);
+        
         $user = $stmt->fetch();
         if($user)
         {
             $_SESSION['id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['money'] = $user['money'];
+            // $_SESSION['money'] = $user['money'];
             return TRUE;
         }
         else

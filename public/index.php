@@ -2,6 +2,8 @@
 // ini_set("session.save_handler", "redis"); 
 // ini_set("session.save_path", "tcp://127.0.0.1:6379?database=3"); 
 // session_start();
+// ini_set('session.gc_maxlifetime', 600);   // 设置 SESSION 10分钟过期
+// session_start();
 define('ROOT',dirname(__FILE__).'/../');
 
 require(ROOT.'vendor/autoload.php');
@@ -44,7 +46,11 @@ $action = $argv[2];
 }
 
 
-
+function redirect($url)
+{
+    header('Location:' . $url);
+    exit;
+}
 
 $fullController = 'controllers\\'.$controller;
 
@@ -88,4 +94,26 @@ function config ($name){
         $config = require(ROOT.'config.php');
     }
     return $config[$name];
+}
+
+function message($message,$type,$url,$seconds = 5)
+{
+    if($type=0)
+    {
+        echo "<script>alert('{$message}');location.href='{$url}';</script>";
+        exit;
+    }
+    else if($type=1)
+    {
+        view('common.success',[
+            'message'=>$message,
+            'url'=>$url,
+            'seconds'=>$seconds
+        ]);
+    }
+    else if($type=2)
+    {
+        $_SESSION['_MISS_'] = $message;
+        redirect($url);
+    }
 }

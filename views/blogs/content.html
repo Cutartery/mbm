@@ -5,9 +5,11 @@
     <title><?=$blog['title']?></title>
 </head>
 <body>
+    <?php view('common.nav')?>
     <h1><?=$blog['title']?></h1>
     <p>浏览量：<span id="display"></span></p>
     <p><?=$blog['content']?></p>
+    <?php view('common.footer')?>
 </body>
 </html>
 <script
@@ -24,9 +26,10 @@
     $.ajax({
         type:"GET",
         url:url,
+        dataType:'json',
         success:function(data)
         {
-            $("#display").html(data);
+            $("#display").html(data.display);
         }
     });
 </script>

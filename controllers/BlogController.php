@@ -10,7 +10,7 @@ class BlogController
     {
         $blog = new Blog;
         $data = $blog->search();
-        var_dump($data['btns']);
+        // var_dump($data['btns']);
         // echo "<pre>";
         // var_dump($data);die;
         view('blogs.index',$data);
@@ -36,7 +36,11 @@ class BlogController
     {
         $id = (int)$_GET['id'];
         $blog = new Blog;
-        echo $blog->getDisplay($id);
+        $display =  $blog->getDisplay($id);
+        echo json_encode([
+            'display' => $display,
+            'email' => isset($_SESSION['email']) ? $_SESSION['email']: ''
+        ]);
     }
 
 
@@ -74,5 +78,9 @@ class BlogController
             $b .= iconv('GB2312', 'UTF-8', $a);
         }
         return $b;
+    }
+    public function create()
+    {
+        view('blogs.create');
     }
 }
