@@ -95,6 +95,14 @@ class Blog extends Base
         ];
     }
 
+    public function add($title,$content,$is_show)
+    {
+        $stmt = self::$pdo->prepare("INSERT INTO blogs(title,content,is_show,user_id) VALUES(?,?,?,?)");
+        $ret = $stmt->execute([
+            
+        ])
+    }
+
     public function content_to_html()
     {
 
