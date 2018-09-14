@@ -113,4 +113,11 @@ class UserController
             die('激活码无效！');
         }
     }
+    public function delete()
+    {
+        $id = $GET['id'];
+        $blog = new Blog;
+        $blog->delete($id);
+        message('删除成功',2,'/blog/index');
+    }
 }

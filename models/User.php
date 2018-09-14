@@ -39,5 +39,14 @@ class User extends Base
             return FALSE;
         }
     }
+    public function getMoney()
+    {
+        $id = $_SESSION['id'];
+        $stmt = self::$pdo->prepare('SELECT money FROM users WHERE id = ?');
+        $stmt->execute([$id]);
+        $money = $stmt->fetch(PDO::FETCH_COLUMN);
+        $_SESSION['money'] = $money;
+        return $money;
+    }
 
 }

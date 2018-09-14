@@ -14,7 +14,9 @@
     </style>
 </head>
 <body>
+    <!-- <?php var_dump($_SESSION); ?> -->
     <?php view('common.nav') ?>
+    <!-- <?php echo 123;?> -->
     <h1>日志列表</h1>
     <div>
         <form action="" method="">
@@ -60,9 +62,10 @@
             <td><?=$v['updated_at']?></td>
             <td><?=$v['display']?></td>
             <td><?=$v['is_show']==0?'隐藏':'显示'?></td>
+            <?php echo $v['id']?>
             <td>
                 <a href="">修改</a>
-                <a href="">删除</a>
+                <a onclick="return confirm('确定要删除吗！');" href="/blog/delete?id=<?=$v['id']?>">删除</a>
             </td>
         </tr>
         <?php endforeach; ?>

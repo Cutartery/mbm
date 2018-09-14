@@ -1,7 +1,7 @@
 <?php
 // ini_set("session.save_handler", "redis"); 
 // ini_set("session.save_path", "tcp://127.0.0.1:6379?database=3"); 
-// session_start();
+session_start();
 // ini_set('session.gc_maxlifetime', 600);   // 设置 SESSION 10分钟过期
 // session_start();
 define('ROOT',dirname(__FILE__).'/../');

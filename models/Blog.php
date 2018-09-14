@@ -7,8 +7,7 @@ class Blog extends Base
 {
     public function search()
     {
-
-        $where = 1;
+        $where = "user_id={$_SESSION['id']}";
 
         $value = [];
  
@@ -99,8 +98,20 @@ class Blog extends Base
     {
         $stmt = self::$pdo->prepare("INSERT INTO blogs(title,content,is_show,user_id) VALUES(?,?,?,?)");
         $ret = $stmt->execute([
-            
-        ])
+            $title,
+            $content,
+            $is_show,
+            $_SESSION['id'],
+        ]);
+        if(!$ret)
+        {
+            echo '失败';
+            $error = $stmt->errorInfo();
+            echo '<pre>';
+            var_dump($error);
+            exit;
+        }
+        return self::$pdo->lastInsertId();
     }
 
     public function content_to_html()
@@ -172,5 +183,17 @@ class Blog extends Base
             self::$pdo->exec($sql);
         }
 
+    }
+    public function delete($id)
+    {
+        $stmt = self::$pdo->prepare("DELETE FROM blogs WHERE id = ? AND user_id = ?");
+        $stmt->execute([
+            $id,
+            $_SESSION['id'],
+        ]);
+    }
+    public function deleteHtml($id)
+    {
+        @unlink(ROOT.'public/contents/'.$id.'.html');
     }
 }

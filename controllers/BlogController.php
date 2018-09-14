@@ -83,4 +83,34 @@ class BlogController
     {
         view('blogs.create');
     }
+    public function store()
+    {
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $is_show = $_POST['is_show'];
+        $blog = new Blog;
+        $blog->add($title,$content,$is_show);
+        message('发表成功！',2,'/blog/index');
+    }
+    public function content()
+    {
+        $id = $_GET['id'];
+        $model = new Blog;
+        $blog = $model->find($id);
+        if($_SESSION['id'] != $blog['user_id'])
+        {
+            die('无权访问！');
+        }
+        view('blogs.content',[
+            'blog'=>$blog
+        ]);
+    }
+    public function delete()
+    {
+        $id = $_GET['id'];
+        $blog = new Blog;
+        $blog->delete($id);
+        $blog->deleteHtml($id);
+        message('删除成功！',2,'/blog/index');
+    }
 }
