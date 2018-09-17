@@ -20,6 +20,7 @@
     <h1>日志列表</h1>
     <div>
         <form action="" method="">
+                <input type="hidden" name="_token" value="<?=csrf()?>">
             关键字：
             <input type="text" name="keywords" value="<?=@$_GET['keywords']?>">
             发表日期：
@@ -62,10 +63,14 @@
             <td><?=$v['updated_at']?></td>
             <td><?=$v['display']?></td>
             <td><?=$v['is_show']==0?'隐藏':'显示'?></td>
-            <?php echo $v['id']?>
+            <!-- <?php echo $v['id']?> -->
             <td>
                 <a href="">修改</a>
-                <a onclick="return confirm('确定要删除吗！');" href="/blog/delete?id=<?=$v['id']?>">删除</a>
+                <form action="/blog/delete" method="POST">
+
+                    <a onclick="return confirm('确定要删除吗！');" href="/blog/delete?id=<?=$v['id']?>">删除</a>
+
+                </form>
             </td>
         </tr>
         <?php endforeach; ?>

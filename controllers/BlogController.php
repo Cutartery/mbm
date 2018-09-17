@@ -113,4 +113,12 @@ class BlogController
         $blog->deleteHtml($id);
         message('删除成功！',2,'/blog/index');
     }
+
+    // 单页面静态化
+    function singlePage (){
+        // 接收传来的参数
+        $id = $_GET['p'];
+        $blog = new Blog;
+        $blog->singlePage($id);
+    }
 }

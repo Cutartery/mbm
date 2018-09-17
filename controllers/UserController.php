@@ -63,7 +63,7 @@ class UserController
     public function logout()
     {
         $_SESSION = [];
-        die('退出成功！');
+        message('退出成功！',2,'/');
     }
 
 

@@ -8,6 +8,7 @@
     <?php view('common.nav') ?>
     <h1>添加日志</h1>
     <form action="/blog/store" method="POST">
+        <input type="hidden" name="_token" value="<?=csrf()?>">
         <div>
             标题：
             <input type="text" name="title" >
@@ -18,8 +19,8 @@
         </div>
         <div>
             是否显示：
-            <input type="radio" name="is_show" value="0" checked>公开
-            <input type="radio" name="is_show" value="1">私有
+            <input type="radio" name="is_show" value="1" checked>公开
+            <input type="radio" name="is_show" value="0">私有
         </div>
         <div>
             <input type="submit" value="发表">

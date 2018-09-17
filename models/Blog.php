@@ -114,6 +114,8 @@ class Blog extends Base
         return self::$pdo->lastInsertId();
     }
 
+
+    //静态页
     public function content_to_html()
     {
 
@@ -128,6 +130,7 @@ class Blog extends Base
             view('blogs.content',[
                 'blog'=> $v,
             ]);
+
             $str = ob_get_contents();
 
             file_put_contents(ROOT.'public/contents/'.$v['id'].'.html',$str);
@@ -148,6 +151,8 @@ class Blog extends Base
 
         file_get_contents(ROOT.'public/index.html',$str);
     }
+
+
     public function getDisplay($id)
     {
         $key = "blog-{$id}";
@@ -195,5 +200,43 @@ class Blog extends Base
     public function deleteHtml($id)
     {
         @unlink(ROOT.'public/contents/'.$id.'.html');
+    }
+    public function getNew()
+    {
+        $stmt = self::$pdo->query("SELECT * FROM blogs WHERE is_show=1 ORDER BY id DESC LIMIT 20");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // 单页面静态化
+    function singlePage ($id){
+
+        // 根据 id 往数据库中查询
+        $stmt =  Blog::$pdo->prepare("select * from blogs where id = ?");
+        $stmt->execute([
+            $id
+        ]);
+        
+        $arr = $stmt->fetch(PDO::FETCH_ASSOC);
+        // echo "<pre>";
+        // var_dump($arr);
+        // die;
+        // 开启缓存区
+        ob_start();
+
+        view('blogs.content',[
+            'blog'=> $arr,
+        ]);
+
+        // 获取缓存区中的所有数据
+        $content = ob_get_contents();
+
+        // 将缓存区获取道德所有数据写入 public/contents 中
+        file_put_contents(ROOT."public/contents/{$arr['id']}.html",$content);
+
+        // 关闭缓存区
+        ob_clean();
+
+        // 跳转到生成的静态页中
+        header("location:/contents/{$arr['id']}.html");
     }
 }

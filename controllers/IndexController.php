@@ -5,6 +5,12 @@ class IndexController
 {
     public function index()
     {
-        echo "index控制器";
+
+        $blog = new \models\Blog;
+        $blogs = $blog->getNew();
+
+        view('index.index',[
+            'blogs'=>$blogs
+        ]);
     }
 }
