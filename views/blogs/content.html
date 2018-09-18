@@ -3,9 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title><?=$blog['title']?></title>
+    <style>
+    
+    .agree-list {
+        border: 1px solid skyblue;
+        padding: 0;
+        text-align: center;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid skyblue;
+        padding: 5px;
+        margin-left: 20px;
+    }
+    .agree-list h3 {
+        padding: 0;
+        margin-top: 0;
+        background-color: #EEE;
+        padding: 5px;
+    }
+    
+    </style>
 </head>
 <body>
-    <?php view('common.nav')?>
+    <h1>智聊系统</h1>
+    <div id="menu"></div>
+
     <h1><?=$blog['title']?></h1>
     <p>浏览量：<span id="display"></span></p>
     <p><?=$blog['content']?></p>
@@ -18,18 +43,36 @@
   crossorigin="anonymous"></script>
 
 <script>
-
+    //更新并获取登录状态
+    //获取当前日志id
     var id = "<?=$blog['id']?>";
-
+    //定义链接接口
     var url = "/blog/display?id="+id;
-
+    //请求这个地址
     $.ajax({
         type:"GET",
         url:url,
-        dataType:'json',
+        dataType:'json',//声明服务器返回值是json（解析json）
         success:function(data)
         {
+            //把返回的数据放到页面
             $("#display").html(data.display);
+            var html = '<a href="/">首页</a>'
+            //拼接按钮字符串
+            //无论有没有都有首页的按钮
+            if(data.email == "")
+            {
+                //js中定义多行字符串时要用`反引号
+                html += `<a href="/user/register">注册</a>
+                        <a href="/user/login">登录</a>`;
+            }
+            else
+            {
+                html += data.email + `<a href="/blog/index">日志列表</a>
+                                      <a href="/blog/create">发表日志</a>
+                                      <a href="/user/login">退出</a>`;
+            }
+            $("#menu").html(html);
         }
     });
 </script>

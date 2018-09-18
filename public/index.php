@@ -172,6 +172,9 @@ function csrf()
     {
         $token = md5(rand(1,99999).microtime());
         $_SESSION['token'] = $token;
+    
+        return $token;
     }
-    return $token;
+    
+    return $_SESSION['token'];
 }

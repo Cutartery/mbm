@@ -32,16 +32,7 @@ class BlogController
 
 
 
-    public function display()
-    {
-        $id = (int)$_GET['id'];
-        $blog = new Blog;
-        $display =  $blog->getDisplay($id);
-        echo json_encode([
-            'display' => $display,
-            'email' => isset($_SESSION['email']) ? $_SESSION['email']: ''
-        ]);
-    }
+
 
 
     public function displayToDb()
@@ -90,24 +81,57 @@ class BlogController
         $is_show = $_POST['is_show'];
         $blog = new Blog;
         $blog->add($title,$content,$is_show);
+
+        if($is_show == 1)
+        {
+            $blog->singlePage($id);
+        }
+
         message('发表成功！',2,'/blog/index');
     }
+
+    //显示私有日志
     public function content()
     {
+        //接收id并显示日志
         $id = $_GET['id'];
         $model = new Blog;
         $blog = $model->find($id);
-        if($_SESSION['id'] != $blog['user_id'])
+        //判断这个日志是否是我的
+        if($_SESSION['id']!=$blog['user_id'])
         {
-            die('无权访问！');
+            die('访问无效');
         }
+        //加载视图
         view('blogs.content',[
             'blog'=>$blog
         ]);
+
     }
+
+    //登录状态
+
+    public function display()
+    {
+        //接收id
+        $id = (int)$_GET['id'];
+        $blog = new Blog;
+        //让浏览能量加一
+        $display = $blog->getDisplay($id);
+        //返回多个数据必须要用JSON
+
+        echo json_encode([
+            'display'=>$display,
+            'email'=>isset($_SESSION['email']) ? $_SESSION['email'] : ''
+        ]);
+    }
+
+
+
+    //删除日志
     public function delete()
     {
-        $id = $_GET['id'];
+        $id = $_POST['id'];
         $blog = new Blog;
         $blog->delete($id);
         $blog->deleteHtml($id);
@@ -120,5 +144,35 @@ class BlogController
         $id = $_GET['p'];
         $blog = new Blog;
         $blog->singlePage($id);
+    }
+    //修改日志
+    function edit()
+    {
+        $id = $_GET['id'];
+        $blog = new Blog;
+        $data = $blog->find($id);
+        view('blogs.edit',[
+            'data'=>$data
+        ]);
+    }
+    public function update()
+    {
+    
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $is_show = $_POST['is_show'];
+        $id = $_POST['id'];
+
+        $blog = new Blog;
+        $blog->update($title,$content,$is_show,$id);
+
+        if($is_show == 1){
+            $blog->singlePage($id);
+        }else {
+            $blog->deleteHtml($id);
+        }
+
+        
+        message('修改成功',0,'/blog/index');
     }
 }

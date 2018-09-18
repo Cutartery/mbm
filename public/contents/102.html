@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>赤鼎虏惧量下夕冲屉屎输狭缎扳按辣芬赌社蔽</title>
+    <style>
+    
+    .agree-list {
+        border: 1px solid skyblue;
+        padding: 0;
+        text-align: center;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid skyblue;
+        padding: 5px;
+        margin-left: 20px;
+    }
+    .agree-list h3 {
+        padding: 0;
+        margin-top: 0;
+        background-color: #EEE;
+        padding: 5px;
+    }
+    
+    </style>
 </head>
 <body>
-    
-<h1>智聊系统</h1>
-<a href="/">首页</a>
+    <h1>智聊系统</h1>
+    <div id="menu"></div>
 
-
-    <a href="/user/charge">充值</a>
-    <a href="/user/orders">充值列表</a>
-    <a href="/blog/index">日志列表</a>
-    <a href="/blog/create">发表日志</a>
-
-    45896692161@126.com    （ <span style="color:#F00;font-weight:bold;">
-        </span> 元）
-    
-    <a href="/user/logout">退出</a>
-
-
-
-<hr>    <h1>赤鼎虏惧量下夕冲屉屎输狭缎扳按辣芬赌社蔽</h1>
+    <h1>赤鼎虏惧量下夕冲屉屎输狭缎扳按辣芬赌社蔽</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>啥宝墒洞惟辑啃仓朔嘛烯闭然弯棺滩肥屠核冻罐亭佛钉既故开拇磋提揣凸擅迸访舰底悼盗扯派苇熄担跺草愧髓辅狈骚船土惩吭掳其蛊跋视便揽柿奈首卤娶卷篓疯掇九糕辖卑铃另篮料顽课桶髓系箱梅拉卤菊纤倘既碗窃跺首攀葱扇咎窟雌钩劫虐金显授萎篡透橇士酷峰葡缄腥瓦桐特低镶悲捎骇嚏标疚块昧毁另轮仆恢傻世休县菜兔惟静脾凳楔兽垮躬擦戒棱首味段窝阂法认法赶冈捣焊兢痰刹芍蛔库矮辜兑宫棋班去辛慷楼凌驮吐较阿息酚韩捣辟附弄撤壳充洽</p>
     <hr>
@@ -34,18 +43,36 @@
   crossorigin="anonymous"></script>
 
 <script>
-
+    //更新并获取登录状态
+    //获取当前日志id
     var id = "102";
-
+    //定义链接接口
     var url = "/blog/display?id="+id;
-
+    //请求这个地址
     $.ajax({
         type:"GET",
         url:url,
-        dataType:'json',
+        dataType:'json',//声明服务器返回值是json（解析json）
         success:function(data)
         {
+            //把返回的数据放到页面
             $("#display").html(data.display);
+            var html = '<a href="/">首页</a>'
+            //拼接按钮字符串
+            //无论有没有都有首页的按钮
+            if(data.email == "")
+            {
+                //js中定义多行字符串时要用`反引号
+                html += `<a href="/user/register">注册</a>
+                        <a href="/user/login">登录</a>`;
+            }
+            else
+            {
+                html += data.email + `<a href="/blog/index">日志列表</a>
+                                      <a href="/blog/create">发表日志</a>
+                                      <a href="/user/login">退出</a>`;
+            }
+            $("#menu").html(html);
         }
     });
 </script>

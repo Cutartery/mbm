@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>饭驼履畴垦细嗓络巴骨本獭己横讨送统脆蔽辖嚼奴塘鹅输恳们既付碉挞敛僻佛殴扦誊喷筷耸淋啡</title>
+    <style>
+    
+    .agree-list {
+        border: 1px solid skyblue;
+        padding: 0;
+        text-align: center;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid skyblue;
+        padding: 5px;
+        margin-left: 20px;
+    }
+    .agree-list h3 {
+        padding: 0;
+        margin-top: 0;
+        background-color: #EEE;
+        padding: 5px;
+    }
+    
+    </style>
 </head>
 <body>
-    
-<h1>智聊系统</h1>
-<a href="/">首页</a>
+    <h1>智聊系统</h1>
+    <div id="menu"></div>
 
-
-    <a href="/user/charge">充值</a>
-    <a href="/user/orders">充值列表</a>
-    <a href="/blog/index">日志列表</a>
-    <a href="/blog/create">发表日志</a>
-
-    45896692161@126.com    （ <span style="color:#F00;font-weight:bold;">
-        </span> 元）
-    
-    <a href="/user/logout">退出</a>
-
-
-
-<hr>    <h1>饭驼履畴垦细嗓络巴骨本獭己横讨送统脆蔽辖嚼奴塘鹅输恳们既付碉挞敛僻佛殴扦誊喷筷耸淋啡</h1>
+    <h1>饭驼履畴垦细嗓络巴骨本獭己横讨送统脆蔽辖嚼奴塘鹅输恳们既付碉挞敛僻佛殴扦誊喷筷耸淋啡</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>惫世颊抚揩头词虎普婆浦为赣呢铆鹅葛磋撅赤鼻湍烫阮枯蓝失毁狙携胆仆蒙蜕版冒滦死汐投呸诫激诡咎不玖藕骗当刨仟洼崔亭禄奠栓仍凉伶膛械蓬藉壁博阶兢喇罢绩档习岭禽彩肝轰瞬扭列酥撑扯号袄氢孙荆零违氮椭绣砂里停财同贬叭奉墩仁捷点蹬入弗慨芜嫌安挨岛途丁墒仟揽陀犯彼篓奥菊好激螺纪贸蹄怕公忿豁俯师角埔替烽兜垛袍的擂侍烫杭兴啪身图瘫对侩匣汕考怕惰刷怂吨秤讥擞结提姐恕舒驰酒肠铅波衫朵会匈继泥抹讨位卑氦督恰琅撅口拦对弛堕府遁课拼桥铆嫡讨径泰跨糙藐笑磺谜洽晃裸龚僧驳督</p>
     <hr>
@@ -34,18 +43,36 @@
   crossorigin="anonymous"></script>
 
 <script>
-
+    //更新并获取登录状态
+    //获取当前日志id
     var id = "123";
-
+    //定义链接接口
     var url = "/blog/display?id="+id;
-
+    //请求这个地址
     $.ajax({
         type:"GET",
         url:url,
-        dataType:'json',
+        dataType:'json',//声明服务器返回值是json（解析json）
         success:function(data)
         {
+            //把返回的数据放到页面
             $("#display").html(data.display);
+            var html = '<a href="/">首页</a>'
+            //拼接按钮字符串
+            //无论有没有都有首页的按钮
+            if(data.email == "")
+            {
+                //js中定义多行字符串时要用`反引号
+                html += `<a href="/user/register">注册</a>
+                        <a href="/user/login">登录</a>`;
+            }
+            else
+            {
+                html += data.email + `<a href="/blog/index">日志列表</a>
+                                      <a href="/blog/create">发表日志</a>
+                                      <a href="/user/login">退出</a>`;
+            }
+            $("#menu").html(html);
         }
     });
 </script>

@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>顶钦吠塘锯拦撇汤陷界睛购芯社览杰胶眠拉昂颁山饭梢胸吝棋拱沮茧瞧琴钎苗惰垮揪坪觅卧江烂陌暑纹寺努股谐截瓦挖哼豆妈咎系父耗漂郊库笆墨瞄届冉登系脯橙睹糙莎统媳赋湍惕金氮磷协呛欧免猎彭失围挫默叫幢休籍娇玫咯良</title>
+    <style>
+    
+    .agree-list {
+        border: 1px solid skyblue;
+        padding: 0;
+        text-align: center;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid skyblue;
+        padding: 5px;
+        margin-left: 20px;
+    }
+    .agree-list h3 {
+        padding: 0;
+        margin-top: 0;
+        background-color: #EEE;
+        padding: 5px;
+    }
+    
+    </style>
 </head>
 <body>
-    
-<h1>智聊系统</h1>
-<a href="/">首页</a>
+    <h1>智聊系统</h1>
+    <div id="menu"></div>
 
-
-    <a href="/user/charge">充值</a>
-    <a href="/user/orders">充值列表</a>
-    <a href="/blog/index">日志列表</a>
-    <a href="/blog/create">发表日志</a>
-
-    45896692161@126.com    （ <span style="color:#F00;font-weight:bold;">
-        </span> 元）
-    
-    <a href="/user/logout">退出</a>
-
-
-
-<hr>    <h1>顶钦吠塘锯拦撇汤陷界睛购芯社览杰胶眠拉昂颁山饭梢胸吝棋拱沮茧瞧琴钎苗惰垮揪坪觅卧江烂陌暑纹寺努股谐截瓦挖哼豆妈咎系父耗漂郊库笆墨瞄届冉登系脯橙睹糙莎统媳赋湍惕金氮磷协呛欧免猎彭失围挫默叫幢休籍娇玫咯良</h1>
+    <h1>顶钦吠塘锯拦撇汤陷界睛购芯社览杰胶眠拉昂颁山饭梢胸吝棋拱沮茧瞧琴钎苗惰垮揪坪觅卧江烂陌暑纹寺努股谐截瓦挖哼豆妈咎系父耗漂郊库笆墨瞄届冉登系脯橙睹糙莎统媳赋湍惕金氮磷协呛欧免猎彭失围挫默叫幢休籍娇玫咯良</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>芹歪沙躺筐泰底线捍惩拜还密沫痛全蓄广楔沤环敢桂鸿读屏舞耪疾勉莽倦慈踩款价截撂鸥食忱蝗廓玲靶功尺殊盘横段宏桨痢杯都醒凹难姆般啸耽卢梳九晒窍管暮叮惶皆蹋痰吨浑莱蓉孤忙浚桃骆亭菱睹额策坦币卡糜送啊妹敛垒阶负嫁呕省膜伪姥楞灌桅邪侵礁感逃皆目纶涟埠砂副扫赦联吗俯官煽蛋破芹绦姓袭陶盗栋辨寒闺粗陶堵晃搁守扫街炯参叹萍搽侣八貉坏宋抖究呜聊咎廊谐退潮仇涪凉肠矛陵贝呕宪顾慌侣揩石税阿扇剃沁栓煞投谓瞧魔豢兰芹蔑衬偶</p>
     <hr>
@@ -34,18 +43,36 @@
   crossorigin="anonymous"></script>
 
 <script>
-
+    //更新并获取登录状态
+    //获取当前日志id
     var id = "167";
-
+    //定义链接接口
     var url = "/blog/display?id="+id;
-
+    //请求这个地址
     $.ajax({
         type:"GET",
         url:url,
-        dataType:'json',
+        dataType:'json',//声明服务器返回值是json（解析json）
         success:function(data)
         {
+            //把返回的数据放到页面
             $("#display").html(data.display);
+            var html = '<a href="/">首页</a>'
+            //拼接按钮字符串
+            //无论有没有都有首页的按钮
+            if(data.email == "")
+            {
+                //js中定义多行字符串时要用`反引号
+                html += `<a href="/user/register">注册</a>
+                        <a href="/user/login">登录</a>`;
+            }
+            else
+            {
+                html += data.email + `<a href="/blog/index">日志列表</a>
+                                      <a href="/blog/create">发表日志</a>
+                                      <a href="/user/login">退出</a>`;
+            }
+            $("#menu").html(html);
         }
     });
 </script>

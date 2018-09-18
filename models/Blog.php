@@ -152,7 +152,7 @@ class Blog extends Base
         file_get_contents(ROOT.'public/index.html',$str);
     }
 
-
+    //浏览量
     public function getDisplay($id)
     {
         $key = "blog-{$id}";
@@ -197,6 +197,8 @@ class Blog extends Base
             $_SESSION['id'],
         ]);
     }
+
+    //删除静态页
     public function deleteHtml($id)
     {
         @unlink(ROOT.'public/contents/'.$id.'.html');
@@ -233,10 +235,34 @@ class Blog extends Base
         // 将缓存区获取道德所有数据写入 public/contents 中
         file_put_contents(ROOT."public/contents/{$arr['id']}.html",$content);
 
-        // 关闭缓存区
-        ob_clean();
+        // // 关闭缓存区
+        // ob_clean();
+    }
+    
 
-        // 跳转到生成的静态页中
-        header("location:/contents/{$arr['id']}.html");
+
+    public function find($id)
+    {
+        $stmt = self::$pdo->prepare("SELECT * FROM blogs WHERE id = ?");
+ 
+        $stmt->execute([
+            $id
+        ]);
+        // echo "<pre>";
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function update($title,$content,$is_show,$id)
+    {   
+        $stmt = self::$pdo->prepare("UPDATE blogs SET title=?,content=?,is_show=? where id=?");
+        // echo "<pre>";
+        // var_dump($stmt);
+        $bool = $stmt->execute([
+            $title,
+            $content,
+            $is_show,
+            $id,
+        ]);
+
+        return $bool;
     }
 }

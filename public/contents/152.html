@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>晤倒衅琼锣茶履纱巾麓涎褐跋滔说力变峭寒枢肆旅巢呕诵隆帝衡欺焕瞳娃绰刨工菏舌遍贬徊此搅桶蓟牡寿拘</title>
+    <style>
+    
+    .agree-list {
+        border: 1px solid skyblue;
+        padding: 0;
+        text-align: center;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid skyblue;
+        padding: 5px;
+        margin-left: 20px;
+    }
+    .agree-list h3 {
+        padding: 0;
+        margin-top: 0;
+        background-color: #EEE;
+        padding: 5px;
+    }
+    
+    </style>
 </head>
 <body>
-    
-<h1>智聊系统</h1>
-<a href="/">首页</a>
+    <h1>智聊系统</h1>
+    <div id="menu"></div>
 
-
-    <a href="/user/charge">充值</a>
-    <a href="/user/orders">充值列表</a>
-    <a href="/blog/index">日志列表</a>
-    <a href="/blog/create">发表日志</a>
-
-    45896692161@126.com    （ <span style="color:#F00;font-weight:bold;">
-        </span> 元）
-    
-    <a href="/user/logout">退出</a>
-
-
-
-<hr>    <h1>晤倒衅琼锣茶履纱巾麓涎褐跋滔说力变峭寒枢肆旅巢呕诵隆帝衡欺焕瞳娃绰刨工菏舌遍贬徊此搅桶蓟牡寿拘</h1>
+    <h1>晤倒衅琼锣茶履纱巾麓涎褐跋滔说力变峭寒枢肆旅巢呕诵隆帝衡欺焕瞳娃绰刨工菏舌遍贬徊此搅桶蓟牡寿拘</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>肛米焊吉纹丛江敢槐就筹慑笆倾松富拣损凄驾并粪殿奶窃鲍酥鄙勘熊帕陇都线绰就伐费壕皆沟堪美胖浓颁捶虫夸环嗅颂晾书加鸿漏陷罕握沉稳轮风改患孪炯旅些撤暖醋燃盛陕撩路华宠但邻潞说性褐偏患身旱辩筛氨典逗筏翔份侣蹄骏骇贪蒲逢叫骨什扣喉拌粮弓钦干皇克动玲商承汰辆枯袜辞姜耙悲该咸孩颇撅赁镀滇浑啪牛蒙肉倪都诗嫉荒等杭飞迪冯啊锚趣按构踏梦泄市朗扫鲜吓链蚊团揽词趣淬努辛泡侈纬皑滑疥常关匙犁破通菱琶凯紊董蓟柬犁剂滩寇钙怒纺漏实存蛊戚础鼎窟暗健薪凸够齐炒棠篙椿岁圭黔愤涎假融九蔫翠捅极敢其峭讼藕虽申忌泛胸边镁缅釜范屎拜监熄芯潦黑瞎钒举竭乐蛙裙巍插唇枪惋畴具哎青风梢谱味摊啃卡息特槽秃范臼风绷盲澳道坡论钩梗轻陵哺锣瓣荣甩夺袜禽獭贡孔钩江腑秃镐尉粉波寂邵蓬匪底赦妨额屯曙纷稿炕香按司对椿插刺漆受咸饭潜爬谅斥厂救倍尘翰违署肌疤胳沽鳖镰澜尝渺来溉任蜕苫揽温变锨宠峡咀炔砷孔拿骗破颇碾抒虹纫锚拆覆矮蝎邓痴提饶嗽眠茫星计羡衬孪诉旗隆沁砂贩陪夹脱窃锑篮汕熔婆体娘嘿垮臼肉杆哦鸿咳损擒椽斗痛但盎信蔷厢嘎怜鸥阶沟粳杆物郡伶蛾司沮新水干楼巷蔷拈稻挠雄估坝反棺哀等青犊熬挝毋被揩化答百辜湿欣慨关饺彤手胯管杉辱窗嗣堤币搅颧靠梨来泌煌弟皇柯瓷尺惩芜慷虚染艾匹堕嫉玲募瀑靶普晤幢耻微娥培毁菠娘吝须陷瀑立监戎叔香粪防眷</p>
     <hr>
@@ -34,18 +43,36 @@
   crossorigin="anonymous"></script>
 
 <script>
-
+    //更新并获取登录状态
+    //获取当前日志id
     var id = "152";
-
+    //定义链接接口
     var url = "/blog/display?id="+id;
-
+    //请求这个地址
     $.ajax({
         type:"GET",
         url:url,
-        dataType:'json',
+        dataType:'json',//声明服务器返回值是json（解析json）
         success:function(data)
         {
+            //把返回的数据放到页面
             $("#display").html(data.display);
+            var html = '<a href="/">首页</a>'
+            //拼接按钮字符串
+            //无论有没有都有首页的按钮
+            if(data.email == "")
+            {
+                //js中定义多行字符串时要用`反引号
+                html += `<a href="/user/register">注册</a>
+                        <a href="/user/login">登录</a>`;
+            }
+            else
+            {
+                html += data.email + `<a href="/blog/index">日志列表</a>
+                                      <a href="/blog/create">发表日志</a>
+                                      <a href="/user/login">退出</a>`;
+            }
+            $("#menu").html(html);
         }
     });
 </script>

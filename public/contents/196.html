@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>儡兜句茎郝舍纤啊菏遂仍距彤小反范低性恍绊夹谢贿寝东毋念协发署放酵辑红澄笆蚕瓦闪</title>
+    <style>
+    
+    .agree-list {
+        border: 1px solid skyblue;
+        padding: 0;
+        text-align: center;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid skyblue;
+        padding: 5px;
+        margin-left: 20px;
+    }
+    .agree-list h3 {
+        padding: 0;
+        margin-top: 0;
+        background-color: #EEE;
+        padding: 5px;
+    }
+    
+    </style>
 </head>
 <body>
-    
-<h1>智聊系统</h1>
-<a href="/">首页</a>
+    <h1>智聊系统</h1>
+    <div id="menu"></div>
 
-
-    <a href="/user/charge">充值</a>
-    <a href="/user/orders">充值列表</a>
-    <a href="/blog/index">日志列表</a>
-    <a href="/blog/create">发表日志</a>
-
-    45896692161@126.com    （ <span style="color:#F00;font-weight:bold;">
-        </span> 元）
-    
-    <a href="/user/logout">退出</a>
-
-
-
-<hr>    <h1>儡兜句茎郝舍纤啊菏遂仍距彤小反范低性恍绊夹谢贿寝东毋念协发署放酵辑红澄笆蚕瓦闪</h1>
+    <h1>儡兜句茎郝舍纤啊菏遂仍距彤小反范低性恍绊夹谢贿寝东毋念协发署放酵辑红澄笆蚕瓦闪</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>染良荣拜俯炔绕但察靡窜侩陆墩犀醋戏铅单廷坊舌睹忻京狼冈篱梨佰标斗敛蛇环窜铆叮己冀搭踢揭淡卤箍捶察吠上邪秒问示份舞侩霉疽兴顺究嘿十僧浅傻律队匹孤兄垦簧呢九啸让污券悸芭篮辅擎社安啡孪解够嫌狸斑沮奖瑰姐槽党剧鲁隧蛇绞城继具劳敝厦乃伞稼痴梁捶坦欧椭帽功县世白皇解努潘炯啥讲红粮牡轨婪儒簧亨掸泛程衬班恐抛纯铺那块苯踏彤荆情咆曝略粟祷靡凹是借为响愧莆蹈颇行柒盲放魔浇炮痘按蚊抡傅毕侗陡想捷膛肝冷么识哭穷疚陕拨裤辽磺上擅戏搪旦岭寿无烙蠢岁辱须郡链干蟹缺搽傲培凹擂赏锰氏锹挞密涸稳补箍碱逢</p>
     <hr>
@@ -34,18 +43,36 @@
   crossorigin="anonymous"></script>
 
 <script>
-
+    //更新并获取登录状态
+    //获取当前日志id
     var id = "196";
-
+    //定义链接接口
     var url = "/blog/display?id="+id;
-
+    //请求这个地址
     $.ajax({
         type:"GET",
         url:url,
-        dataType:'json',
+        dataType:'json',//声明服务器返回值是json（解析json）
         success:function(data)
         {
+            //把返回的数据放到页面
             $("#display").html(data.display);
+            var html = '<a href="/">首页</a>'
+            //拼接按钮字符串
+            //无论有没有都有首页的按钮
+            if(data.email == "")
+            {
+                //js中定义多行字符串时要用`反引号
+                html += `<a href="/user/register">注册</a>
+                        <a href="/user/login">登录</a>`;
+            }
+            else
+            {
+                html += data.email + `<a href="/blog/index">日志列表</a>
+                                      <a href="/blog/create">发表日志</a>
+                                      <a href="/user/login">退出</a>`;
+            }
+            $("#menu").html(html);
         }
     });
 </script>

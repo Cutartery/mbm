@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>筛沮聚跺漓确宏桂屎胺扑建骄瓮憋团赣毯师匡韭莫懊漠酶椭勤票冈贯侥锈腊概蜗接星尼盎襄顺栓勿</title>
+    <style>
+    
+    .agree-list {
+        border: 1px solid skyblue;
+        padding: 0;
+        text-align: center;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid skyblue;
+        padding: 5px;
+        margin-left: 20px;
+    }
+    .agree-list h3 {
+        padding: 0;
+        margin-top: 0;
+        background-color: #EEE;
+        padding: 5px;
+    }
+    
+    </style>
 </head>
 <body>
-    
-<h1>智聊系统</h1>
-<a href="/">首页</a>
+    <h1>智聊系统</h1>
+    <div id="menu"></div>
 
-
-    <a href="/user/charge">充值</a>
-    <a href="/user/orders">充值列表</a>
-    <a href="/blog/index">日志列表</a>
-    <a href="/blog/create">发表日志</a>
-
-    45896692161@126.com    （ <span style="color:#F00;font-weight:bold;">
-        </span> 元）
-    
-    <a href="/user/logout">退出</a>
-
-
-
-<hr>    <h1>筛沮聚跺漓确宏桂屎胺扑建骄瓮憋团赣毯师匡韭莫懊漠酶椭勤票冈贯侥锈腊概蜗接星尼盎襄顺栓勿</h1>
+    <h1>筛沮聚跺漓确宏桂屎胺扑建骄瓮憋团赣毯师匡韭莫懊漠酶椭勤票冈贯侥锈腊概蜗接星尼盎襄顺栓勿</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>你唇劫猴论迁级崩洽沙舷弧赔尘肋季颧嫌俺即邢喘陌趁栋四屏俩稿衡郊郝祈戚砷钾菜疚书步舜拔盗奋磨单坚链锌认痛厘季哩淳拷采撼钦眉缺布洛涪幂聪猩爸冗筒剂串沥堑屡驳急谅揽丸氮醒送侮乡苫挺菩寿溉淀舜苏每氯箱卡肠歌歼屠勉锈好郎铆瞎痴先探瓷掳踞歧害监猜龋彻爸颅淖拜裁丛挠程肝雌糖扮筹备灰渐蜕别犀唾穆晨斥论蒙拧苔氨齿唐盖泄快挤规爸汗卤仑迷搅哼胸搓承驳令轻逻笆淮尚剩贡挫盾捅鸵殴峦郴炔乐叙窗骗借狠醒关钱迸肥阜涂匹冬淖侧道鲸弊肋酬滤侩圈控邓腔姓冯坡轨肆晾教翁人勘驴叫齿哇腊八酿仕灿椭辜确单竞霞廊凉卞襄俯痞呢脐巩美抖哀姓炯骏歇僵别沮鲜炒灯饱搏库女科申芹姜惦霉痪羚哗里捶光菩违抖稀禽环吓搐纳怂荚潭刷狄谱谈乓疆姜拨浑碑突撵拒搅渡喇堤策卧蜜摄烽害捌抱睛倡稼辖芯庇祭驴厘牌睬</p>
     <hr>
@@ -34,18 +43,36 @@
   crossorigin="anonymous"></script>
 
 <script>
-
+    //更新并获取登录状态
+    //获取当前日志id
     var id = "177";
-
+    //定义链接接口
     var url = "/blog/display?id="+id;
-
+    //请求这个地址
     $.ajax({
         type:"GET",
         url:url,
-        dataType:'json',
+        dataType:'json',//声明服务器返回值是json（解析json）
         success:function(data)
         {
+            //把返回的数据放到页面
             $("#display").html(data.display);
+            var html = '<a href="/">首页</a>'
+            //拼接按钮字符串
+            //无论有没有都有首页的按钮
+            if(data.email == "")
+            {
+                //js中定义多行字符串时要用`反引号
+                html += `<a href="/user/register">注册</a>
+                        <a href="/user/login">登录</a>`;
+            }
+            else
+            {
+                html += data.email + `<a href="/blog/index">日志列表</a>
+                                      <a href="/blog/create">发表日志</a>
+                                      <a href="/user/login">退出</a>`;
+            }
+            $("#menu").html(html);
         }
     });
 </script>

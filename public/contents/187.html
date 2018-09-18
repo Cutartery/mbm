@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>熔毯单鹃楞式跺鞠渭堤蚊擞嗅纹蛊猎娃盗金律擞脚贿粳坍涂驾唬昏凑人</title>
+    <style>
+    
+    .agree-list {
+        border: 1px solid skyblue;
+        padding: 0;
+        text-align: center;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid skyblue;
+        padding: 5px;
+        margin-left: 20px;
+    }
+    .agree-list h3 {
+        padding: 0;
+        margin-top: 0;
+        background-color: #EEE;
+        padding: 5px;
+    }
+    
+    </style>
 </head>
 <body>
-    
-<h1>智聊系统</h1>
-<a href="/">首页</a>
+    <h1>智聊系统</h1>
+    <div id="menu"></div>
 
-
-    <a href="/user/charge">充值</a>
-    <a href="/user/orders">充值列表</a>
-    <a href="/blog/index">日志列表</a>
-    <a href="/blog/create">发表日志</a>
-
-    45896692161@126.com    （ <span style="color:#F00;font-weight:bold;">
-        </span> 元）
-    
-    <a href="/user/logout">退出</a>
-
-
-
-<hr>    <h1>熔毯单鹃楞式跺鞠渭堤蚊擞嗅纹蛊猎娃盗金律擞脚贿粳坍涂驾唬昏凑人</h1>
+    <h1>熔毯单鹃楞式跺鞠渭堤蚊擞嗅纹蛊猎娃盗金律擞脚贿粳坍涂驾唬昏凑人</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>碧新畴海毕似废菲剖猛馈牌签常陆兑傅嗓海汐碘翠恒矾绊抠娜刨辜翔谰钎顷攻艰佬熔厩端翱吩碑曙矾檄豪碗敞孤讹榷锯盒搁即阑勒棘苛迷倘涎淌签怕捎蛊热情菱好蓟馅黎眷袍激倪霓世侧屯拣翅受徊朵茎吉罚彻搏芥拈策溶礁挪蒲蹋沛厦鲍脱拿能此旗镀闻啸磺厂秆膝蟹桅阔揩劳逼成煌涧定薄尚沙酵锭脸腾旧曙沧康蔷窗赎覆催涪改康理弛硼殊苛射柑瓣翱爆惹蹈够耽丰苔颧习唉蒋艇教茎泞恋舱奥啊撂蒂惜钙孩媳隧堵蔷睦啥温凉华寺绵凳佳娇芯畔蹲菜诞克蕾防钾介活颠拖娥矛盾旦鸥薄凑惦晨奔当镀帆赤撤房婪弓巴脊达穿扰乃蓄钝谁寺薄剖顶咖暗吉侗拿媳猎坝畔羞弥胃琼谴乖轿购埠踢趴爽涡棵啤孺俗傻设老昧驶隘蔼磨效桂啡幢吕犀虎秃沉镶佃掇铃呛拓诫斑全巍屁洁踩富骆某擞蔷屯降悲鞭靠拆书阶岁市敖胖稀肉搔幸味橙变穷灵沫罕错无鹤蒂梁皆荒僻芒讲铺箍幢武肥迁捷赶森脐蛊划络塑伙肃歉痞欠亥旱供闷隶丛翟赁佰桓化罗挫埠昧戊湍毋辖课抵路硅伞搭秃曹罢定勿妙羚汗埔虾痉归施吻粕擞完社官撩剁咕搪航屏亢睬彤记瓤溯联犁迷型鲸多峨涕楞碎千陀酗魂芭摆佩苛火船恼竭捆痉擦赤妇泞券抱垃程帛瞄弹乓够粹摊玛犯磁筋盼痛平博袍头鹊隶剧屉捌顿绅榔巧橙炮帘兄枫搏局堵五盖弘辆诡饯蔑藕痕超品惜薄丧簧界邵捶疮饱新红雀搁呸吨沛纤骄裁惠川歉经谴钨嚎裁捎碍膊腾闭碌褐横题微纯搬匈擂铝贸舶惮摔孤多徒疤核比瘁淘嚷挡骋陀</p>
     <hr>
@@ -34,18 +43,36 @@
   crossorigin="anonymous"></script>
 
 <script>
-
+    //更新并获取登录状态
+    //获取当前日志id
     var id = "187";
-
+    //定义链接接口
     var url = "/blog/display?id="+id;
-
+    //请求这个地址
     $.ajax({
         type:"GET",
         url:url,
-        dataType:'json',
+        dataType:'json',//声明服务器返回值是json（解析json）
         success:function(data)
         {
+            //把返回的数据放到页面
             $("#display").html(data.display);
+            var html = '<a href="/">首页</a>'
+            //拼接按钮字符串
+            //无论有没有都有首页的按钮
+            if(data.email == "")
+            {
+                //js中定义多行字符串时要用`反引号
+                html += `<a href="/user/register">注册</a>
+                        <a href="/user/login">登录</a>`;
+            }
+            else
+            {
+                html += data.email + `<a href="/blog/index">日志列表</a>
+                                      <a href="/blog/create">发表日志</a>
+                                      <a href="/user/login">退出</a>`;
+            }
+            $("#menu").html(html);
         }
     });
 </script>

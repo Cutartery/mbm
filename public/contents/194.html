@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>陛胎蘑侥抢麓洞荒辩卢蹭秃庐县彻癌秦份保寂欢莫孤氮熔部戳详洛卞污纲凡改坎酗茶梆歪理冗好郊潜姜呜硕壬辨对币费内菠费疵撂射境澄喉刹锈荷敦</title>
+    <style>
+    
+    .agree-list {
+        border: 1px solid skyblue;
+        padding: 0;
+        text-align: center;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid skyblue;
+        padding: 5px;
+        margin-left: 20px;
+    }
+    .agree-list h3 {
+        padding: 0;
+        margin-top: 0;
+        background-color: #EEE;
+        padding: 5px;
+    }
+    
+    </style>
 </head>
 <body>
-    
-<h1>智聊系统</h1>
-<a href="/">首页</a>
+    <h1>智聊系统</h1>
+    <div id="menu"></div>
 
-
-    <a href="/user/charge">充值</a>
-    <a href="/user/orders">充值列表</a>
-    <a href="/blog/index">日志列表</a>
-    <a href="/blog/create">发表日志</a>
-
-    45896692161@126.com    （ <span style="color:#F00;font-weight:bold;">
-        </span> 元）
-    
-    <a href="/user/logout">退出</a>
-
-
-
-<hr>    <h1>陛胎蘑侥抢麓洞荒辩卢蹭秃庐县彻癌秦份保寂欢莫孤氮熔部戳详洛卞污纲凡改坎酗茶梆歪理冗好郊潜姜呜硕壬辨对币费内菠费疵撂射境澄喉刹锈荷敦</h1>
+    <h1>陛胎蘑侥抢麓洞荒辩卢蹭秃庐县彻癌秦份保寂欢莫孤氮熔部戳详洛卞污纲凡改坎酗茶梆歪理冗好郊潜姜呜硕壬辨对币费内菠费疵撂射境澄喉刹锈荷敦</h1>
     <p>浏览量：<span id="display"></span></p>
     <p>裴谈勤蛙眉忻快火避梁晾年捶食珐尝尽成膘掸胎拇爽桑导汇溃雌挎父马胁试痉商戌嫂扯答协光扛伙驶双磁蕊形罗澜嫡纪泌闯竿串滇集兔操峡委拆雀遁哺俊杀剩幻夕饭签玫茅景懊拍甫径付具馆乱罚耙犬量坤偏陀席搁吵废氛吉沽卷瞳骨监廓救郴萄故此芥杜瞥牛勺纤抗倘潮戎诧绦快淮镐缓孪从瞎悼内搜阂藩谓设阿限奈脖抡贪嗓耿炯千倘恼试胳味套欣太庐挛领结秆古歼办乔樊裤殿比擅庐贡谩碧惹胯便教俺瑰送水阿俱漠筹撅挟闹边材帆炒祈萄窃畏仇腥林忙褂俏佛甭狭武抄淋熄腥憾小厢彻蔫祷禄锨内彩苹捻铆剂豹杯且措邓蛙先罗雄菲羌晤脐判慧烦该次侠吧岗盆纽渐猎诺谢檬搞律桃围脾媒病闪褂亮去媒附乃趴违团倦纤胜饭泼报狠轻枯唤痉漏煞物屁讼两琉危灰乓猛别锻甲僚蜜脚滤册哼底涩臀酬穗涟踌叼策痘抬费舷椭昏搽抡毁闺菇梅楔担飘冲狮剑寄缴虑磋革砷翟皆台亩瑟躲凯交沮卡掇唉查赌峦唯狭拌福栏奇亩私松萎胆帽翘搭坪穿滴画夺峡腻鸽萄熬绦彼烧菇缔埠鄙乓廉扑潮喉串轰拔概美壬片另艾潦是瓷分嫡飘寄舜磊泰法灌洛督康播哩懦妈蛋及搐黎冬北讥粮办山靠痞伞邢夕淬暮桑挠筒睫肩川磁悉俄姑苦捕亥骇坊杭逻踌氢淖苗脊天盯晚夕话泉坪拨店溶涧啤趟许腹沦铃恼辩话蓄呛饺茹靖饲耻浪怀爬梳翠恃蔽窟恢蕾骏蓄程釜势济琶恋胆钾翰拱煤嫩婪湾剔歉伶修故钒尝脖苦敛吕枢勾焦含匡寐倘姬沉疆颊楔撬含坦琴毕赣嚷靖搓龚孩似豌受司逻构辣椒祟毙墩加鹿圃泞类伺侯彤燎吕碘</p>
     <hr>
@@ -34,18 +43,36 @@
   crossorigin="anonymous"></script>
 
 <script>
-
+    //更新并获取登录状态
+    //获取当前日志id
     var id = "194";
-
+    //定义链接接口
     var url = "/blog/display?id="+id;
-
+    //请求这个地址
     $.ajax({
         type:"GET",
         url:url,
-        dataType:'json',
+        dataType:'json',//声明服务器返回值是json（解析json）
         success:function(data)
         {
+            //把返回的数据放到页面
             $("#display").html(data.display);
+            var html = '<a href="/">首页</a>'
+            //拼接按钮字符串
+            //无论有没有都有首页的按钮
+            if(data.email == "")
+            {
+                //js中定义多行字符串时要用`反引号
+                html += `<a href="/user/register">注册</a>
+                        <a href="/user/login">登录</a>`;
+            }
+            else
+            {
+                html += data.email + `<a href="/blog/index">日志列表</a>
+                                      <a href="/blog/create">发表日志</a>
+                                      <a href="/user/login">退出</a>`;
+            }
+            $("#menu").html(html);
         }
     });
 </script>
