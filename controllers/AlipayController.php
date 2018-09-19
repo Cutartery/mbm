@@ -61,8 +61,33 @@ class AlipayController
         // 返回响应
         $alipay->success()->send();
     }
+
+    //退款
     public function refund()
     {
-        
+        //生成唯一的订单号
+        $refundNo = md5(rand(1,99999).microtime());
+        try{
+            //退款
+            $ret = Pay::alipay($this->config)->refund([
+                'out_trade_no'=>'15893074791', //之前的流水订单号
+                'refund_amount'=> 0.01,    //退款金额，单位元
+                'out_request_no'=> $refundNo    //退款订单号
+            ]);
+            if($ret->code == 10000)
+            {
+                echo '退款成功！';
+            }
+            else
+            {
+                echo '退款失败，错误信息'.$ret->sub_msg;
+                echo '错误编号'.$ret->sub_code;
+            }
+        }
+        catch(\Exception $e)
+        {
+            var_dump($e->getMessage());
+        }
+
     }
 }

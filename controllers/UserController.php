@@ -2,6 +2,7 @@
 namespace controllers;
 
 use models\User;
+use models\Order;
 
 class UserController
 {
@@ -119,5 +120,9 @@ class UserController
         $blog = new Blog;
         $blog->delete($id);
         message('删除成功',2,'/blog/index');
+    }
+    public function charge()
+    {
+        view('user.charge');
     }
 }
