@@ -20,6 +20,15 @@ class UserController
         view("user.add");
     }
 
+    function cs (){
+
+        $orderInfo['money'] = 100;
+        
+        // 更新用户余额
+        $user = new \models\User;
+        $ret2 = $user->addMoney($orderInfo['money'], $_SESSION['id']);
+    }
+
     public function store()
     {
         $email = $_POST['email'];
@@ -27,7 +36,7 @@ class UserController
 
         $code = md5(rand(1,99999));
 
-        $redis = \libs\Redis::getInstance();
+        $redis = \libs\Redis::getInstace();
 
         $value = json_encode([
             'email'=>$email,
@@ -49,10 +58,11 @@ class UserController
         ];
         $message = json_encode($message);
 
-        $redis = \libs\Redis::getInstance();
+        $redis = \libs\Redis::getInstace();
 
         $redis->lpush('email',$message);
         echo 'OjbK';
+        // message('注册成功',2,'/user/login');
     }
 
 
@@ -124,5 +134,27 @@ class UserController
     public function charge()
     {
         view('user.charge');
+    }
+    public function docharge()
+    {   
+        //生成订单
+        $money = $_POST['money'];
+        $monel = new Order;
+        $monel->create($money);
+        message('充值订单已生成！请立即支付！',2,'/user/orders');
+
+    }
+    //列出所有订单
+    public function orders()
+    {
+        $order = new Order;
+        $data = $order->search();
+        view('user.orders',$data);
+    }
+    //余额
+    public function money()
+    {
+        $user = new User;
+        echo $user->getMoney();
     }
 }

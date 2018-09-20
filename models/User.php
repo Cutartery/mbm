@@ -31,7 +31,7 @@ class User extends Base
         {
             $_SESSION['id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
-            // $_SESSION['money'] = $user['money'];
+            $_SESSION['money'] = $user['money'];
             return TRUE;
         }
         else
@@ -39,12 +39,30 @@ class User extends Base
             return FALSE;
         }
     }
+
+    public function addMoney($money,$userId)
+    {   
+
+        $stmt = self::$pdo->prepare("UPDATE users SET money=money+? WHERE id=?");
+         $cc = $stmt->execute([
+            $money,
+            $userId
+        ]);
+        $_SESSION['money'] += $money;
+        return $cc;
+
+    }
+
+    //获取余额
     public function getMoney()
     {
         $id = $_SESSION['id'];
-        $stmt = self::$pdo->prepare('SELECT money FROM users WHERE id = ?');
+        //查询数据库
+        $stmt = self::$pdo->prepare("SELECT money FROM users WHERE id = ?");
         $stmt->execute([$id]);
         $money = $stmt->fetch(PDO::FETCH_COLUMN);
+        echo $money;
+        //更新到session中
         $_SESSION['money'] = $money;
         return $money;
     }

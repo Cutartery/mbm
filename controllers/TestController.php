@@ -2,6 +2,8 @@
 namespace controllers;
 
 use models\User;
+use models\Order;
+
 
 class TestController
 {
@@ -23,6 +25,26 @@ class TestController
         ]);
 
     }
+
+    public function aa(){
+        $user = new user;
+        $cc = $user->addMoney(100,1);
+        echo'<pre>';
+        var_dump($cc); 
+        echo'</pre>';
+
+    }
+
+    public function cc(){
+        $order = new Order;
+        $cc = $order->findBySn(261954047349616640);
+        echo'<pre>';
+        var_dump($cc); 
+        echo'</pre>';
+
+    }
+
+
     public function update()
     {
         $user = new User;

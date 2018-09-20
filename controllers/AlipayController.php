@@ -8,11 +8,12 @@ class AlipayController
 {
 
     public $config = [
+        //支付账号         fvdqko6943@sandbox.com          密码        111111
         'app_id' => '2016092200567821',
         // 通知地址
-        'notify_url' => 'http://aea571b0.ngrok.io/alipay/notify',
+        'notify_url' => 'http://2424fd74.ngrok.io/alipay/notify',
         // 跳回地址
-        'return_url' => 'http://localhost:9999/alipay/return',
+        'return_url' => 'http://localhost:8888/alipay/return',
         // 支付宝公钥
         'ali_public_key' => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0biB/54hW3ZI460IunN06uRvFPPdZzkhXCDYyVbgFhf5RUp1kzHnClPcy8MBvzb5VKK2MRi2JOTr73y1ijOtTGrf/EOeVP6VbBbzpQmNB2WAUD9G+RPWbSOGaEarLKQKP2Knyc0Db13QUTAa1JrDDXVno1OtgO3APKJrPA+qHTb9yRbCveK4jGF7cbl+kNurXCi3+y21qHv2s361yFRDWCLAq1lMWRjQ96KvEWPmdKP7dHiouHLr9b8/EanLvJ1yVtWYq0oDFrzOjy7dMePjpZszxXmMZkK1GubnH8vwML5Bg06W9kcIsQ1GJfkRM3+Ugvwzs48+MDjZhwNJNwBJHwIDAQAB',
         // 商户应用密钥
@@ -23,15 +24,35 @@ class AlipayController
     // 发起支付
     public function pay()
     {
-        $order = [
-            'out_trade_no' => time(),    // 本地订单ID
-            'total_amount' => '0.01',    // 支付金额
-            'subject' => 'test subject', // 支付标题
-        ];
-
-        $alipay = Pay::alipay($this->config)->web($order);
-
-        $alipay->send();
+        // $order = [
+        //     'out_trade_no' => time(),    // 本地订单ID
+        //     'total_amount' => '0.01',    // 支付金额
+        //     'subject' => 'test subject', // 支付标题
+        // ];
+        //接受订单编号
+        $sn = $_POST['sn'];
+        //取出订单信息
+        $order = new \models\Order;
+        //根据订单编号取出订单信息
+        $data = $order->findBySn($sn);
+   
+        // die;
+        //如果订单还未支付就跳到支付宝
+        if($data['status']==0)
+        {
+            //跳转到支付宝
+            $alipay = Pay::alipay($this->config)->web([
+                'out_trade_no'=>$sn,
+                'total_amount'=>$data['money'],
+                'subject'=>'智聊系统用户充值-'.$data['money'].'元',
+            ]);
+           
+            $alipay->send();
+        }
+        else
+        {
+            die('订单状态不允许支付');
+        }
     }
     // 支付完成跳回
     public function return()
@@ -54,11 +75,43 @@ class AlipayController
             echo '支付状态：'.$data->trade_status ."\r\n";
             echo '商户ID：'.$data->seller_id ."\r\n";
             echo 'app_id：'.$data->app_id ."\r\n";
+            if($data->trade_status == 'TRADE_SUCCESS' || $data->trade_status == 'TRAD_FINISHED')
+            {
+                //更新订单状态
+                $order = new \models\Order;
+                //获取顶单信息
+                $orderInfo = $order->findBySn($data->out_trade_no);
+                //如果订单的状态为未支付状态，说明他是第一次收到消息，更新订单状态
+                if($orderInfo['status'] == 0)
+                {
+                    //开启事务
+                    $order->startTrans();
+                    
+                    //设置订单为已支付状态
+                    $ret1 = $order->setPaid($data->out_trade_no);
+                    // 更新用户余额
+                    $user = new \models\User;
+                    $ret2 = $user->addMoney($orderInfo['money'], $orderInfo['user_id']);    
+
+                    //判断
+                    if($ret1 && $ret2)
+                    {
+                        //提交事务
+                        $order->commit();
+                    }
+                    else
+                    {
+                        //回滚事务
+                        $order->rollback();
+                    }
+                }
+            }
         } catch (\Exception $e) {
-            echo '失败：';
-            var_dump($e->getMessage()) ;
+            // echo '失败：';
+            // var_dump($e->getMessage()) ;
+            die('非法的消息');
         }
-        // 返回响应
+        // 返回响应,回应支付宝
         $alipay->success()->send();
     }
 

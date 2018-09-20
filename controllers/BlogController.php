@@ -31,7 +31,10 @@ class BlogController
     }
 
 
-
+    function cs (){
+        $flake = new \libs\Snowflake;
+        echo $flake->nextId();
+    }
 
 
 
