@@ -30,7 +30,7 @@ var si = setInterval(function(){
 
     <?=$_SESSION['email']?>
     (<span id="span-money" style="color:#F00;font-weight:bold;"><?=$_SESSION['money']?></span> 元
-        <input type="button" value="更新余额">
+        <input id="update-money" type="button" value="更新余额">
         <script>
             $("#update-money").click(function(){
                 $("#span-money").load("/user/money");

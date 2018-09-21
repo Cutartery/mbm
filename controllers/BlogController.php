@@ -83,7 +83,7 @@ class BlogController
         $content = $_POST['content'];
         $is_show = $_POST['is_show'];
         $blog = new Blog;
-        $blog->add($title,$content,$is_show);
+        $id =  $blog->add($title,$content,$is_show);
 
         if($is_show == 1)
         {

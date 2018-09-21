@@ -25,6 +25,11 @@ class TestController
         ]);
 
     }
+    public function ss()
+    {
+        echo "<pre>";
+        var_dump($_FILES); 
+    }
 
     public function aa(){
         $user = new user;

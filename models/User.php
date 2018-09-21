@@ -61,7 +61,7 @@ class User extends Base
         $stmt = self::$pdo->prepare("SELECT money FROM users WHERE id = ?");
         $stmt->execute([$id]);
         $money = $stmt->fetch(PDO::FETCH_COLUMN);
-        echo $money;
+        // echo $money;
         //更新到session中
         $_SESSION['money'] = $money;
         return $money;

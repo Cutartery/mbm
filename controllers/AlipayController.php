@@ -11,7 +11,7 @@ class AlipayController
         //支付账号         fvdqko6943@sandbox.com          密码        111111
         'app_id' => '2016092200567821',
         // 通知地址
-        'notify_url' => 'http://2424fd74.ngrok.io/alipay/notify',
+        'notify_url' => 'http://828292b1.ngrok.io/alipay/notify',
         // 跳回地址
         'return_url' => 'http://localhost:8888/alipay/return',
         // 支付宝公钥
